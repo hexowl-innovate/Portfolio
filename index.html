@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Manideep Maddala - ECE Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root{
+            --bg-1: #0b1221;
+            --glass-bg: rgba(255,255,255,0.06);
+            --glass-border: rgba(255,255,255,0.08);
+            --accent: #3b82f6;
+            --muted: #94a3b8;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Double-layered abstract background: Navy blue main + light grey overlay */
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(25, 25, 112, 0.9) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(30, 30, 120, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(47, 47, 150, 0.6) 0%, transparent 40%),
+                linear-gradient(135deg, #1e1e3f 0%, #2d2d5a 30%, #3a3a70 60%, #f8f9ff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 60% 60%, rgba(200, 200, 220, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(220, 220, 240, 0.2) 0%, transparent 40%),
+                linear-gradient(45deg, rgba(248, 249, 255, 0.4) 0%, rgba(230, 232, 245, 0.2) 100%);
+            z-index: -1;
+            animation: subtleShift 20s ease-in-out infinite alternate;
+        }
+        @keyframes subtleShift {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.02); }
+        }
+        /* Floating particles animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: sticky;
+            top: 18px;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 10px 18px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px) saturate(130%);
+            -webkit-backdrop-filter: blur(8px) saturate(130%);
+            box-shadow: 0 6px 24px rgba(2,6,23,0.6);
+        }
+        .nav-left { display:flex; align-items:center; gap:12px; }
+        .brand { color: white; font-weight:700; font-size:1.05rem; letter-spacing:0.4px; }
+        .nav-links { display:flex; gap:18px; align-items:center; }
+        .nav-links a { color:var(--muted); text-decoration:none; font-weight:600; }
+        .btn-resume { background: linear-gradient(90deg,var(--accent),#1d4ed8); color:white; padding:8px 14px; border-radius:10px; text-decoration:none; font-weight:700; border: none; box-shadow: 0 8px 30px rgba(59,130,246,0.18); }
+
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        .particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 6px; height: 6px; left: 20%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 3px; height: 3px; left: 70%; animation-delay: 5s; }
+        .particle:nth-child(4) { width: 5px; height: 5px; left: 90%; animation-delay: 8s; }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        .hero-section {
+            background: rgba(255,255,255,0.03);
+            color: #e8f0ff;
+            padding: 140px 20px 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 40px rgba(16,24,64,0.5);
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 70%, rgba(255,255,255,0.15) 0%, transparent 40%),
+                radial-gradient(circle at 70% 30%, rgba(200,200,255,0.1) 0%, transparent 50%);
+            opacity: 0.6;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 36px;
+        }
+        .profile-hero {
+            display: inline-block;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .profile-hero img {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 8px solid rgba(255,255,255,0.4);
+            object-fit: cover;
+            box-shadow: 
+                0 25px 60px rgba(0,0,0,0.4),
+                inset 0 0 0 2px rgba(255,255,255,0.3);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: brightness(1.05) contrast(1.1);
+        }
+        .profile-hero:hover img {
+            transform: scale(1.08) rotate(5deg);
+            box-shadow: 
+                0 35px 80px rgba(30, 58, 138, 0.5),
+                inset 0 0 0 3px rgba(255,255,255,0.5);
+            filter: brightness(1.15) contrast(1.15);
+        }
+        .profile-hero::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(59,130,246,0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
+            50% { transform: translateX(-50%) scale(1.3); opacity: 0.3; }
+        }
+        h1 {
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: var(--muted);
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        .hero-ctas { display:flex; gap:12px; align-items:center; margin-top:10px; }
+        .btn-primary { background: linear-gradient(90deg,var(--accent),#1d4ed8); color:white; padding:12px 18px; border-radius:12px; text-decoration:none; font-weight:700; }
+        .btn-outline { border:1px solid rgba(255,255,255,0.12); color:var(--muted); padding:10px 16px; border-radius:12px; text-decoration:none; }
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            font-size: 1.2rem;
+            margin-top: 40px;
+        }
+        .contact-item {
+            background: rgba(255,255,255,0.06);
+            padding: 18px 28px;
+            border-radius: 50px;
+            backdrop-filter: blur(8px) saturate(130%);
+            -webkit-backdrop-filter: blur(8px) saturate(130%);
+            transition: all 0.45s cubic-bezier(0.22, 0.8, 0.3, 1);
+            border: 1px solid rgba(255,255,255,0.10);
+            color: #e8eefc;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+        .contact-item:hover::before {
+            left: 100%;
+        }
+        .contact-item:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        .section {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px) saturate(140%);
+            -webkit-backdrop-filter: blur(12px) saturate(140%);
+            border-radius: 24px;
+            padding: 72px;
+            margin-bottom: 48px;
+            box-shadow: 0 12px 40px rgba(8,12,40,0.45);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.45s ease, box-shadow 0.45s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #1e40af);
+            box-shadow: 0 2px 10px rgba(59,130,246,0.4);
+        }
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 50px 120px rgba(0,0,0,0.3);
+        }
+        h2 {
+            font-size: 2rem;
+            color: #0f172a;
+            margin-bottom: 26px;
+            text-align: left;
+            font-weight: 800;
+        }
+        .profile-pic {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            border: 8px solid rgba(255,255,255,0.5);
+            margin: 0 auto 40px;
+            display: block;
+            object-fit: cover;
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.4),
+                inset 0 0 0 3px rgba(255,255,255,0.4);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: brightness(1.08) contrast(1.12);
+        }
+        .profile-pic:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 
+                0 40px 100px rgba(30, 58, 138, 0.6),
+                inset 0 0 0 4px rgba(255,255,255,0.6);
+            filter: brightness(1.2) contrast(1.2);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 70px;
+            align-items: center;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        .skill-card {
+            background: rgba(255,255,255,0.04);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px) saturate(130%);
+            -webkit-backdrop-filter: blur(8px) saturate(130%);
+        }
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6);
+        }
+        .skill-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 80px rgba(30, 58, 138, 0.3);
+            background: linear-gradient(135deg, rgba(255,255,255,1), rgba(240,244,255,0.9));
+        }
+        .skill-icon {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #1e40af, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .projects-grid, .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+        .project-card, .hobby-card {
+            background: rgba(255,255,255,0.045);
+            border-radius: 20px;
+            padding: 36px;
+            box-shadow: 0 10px 36px rgba(8,12,40,0.45);
+            transition: transform 0.45s ease, box-shadow 0.45s ease;
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px) saturate(120%);
+            -webkit-backdrop-filter: blur(8px) saturate(120%);
+        }
+        .project-card::before, .hobby-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #1d4ed8);
+        }
+        .project-card:hover, .hobby-card:hover {
+            transform: translateY(-25px) scale(1.04);
+            box-shadow: 0 50px 120px rgba(0,0,0,0.35);
+        }
+        .hobby-card {
+            color: #e8eefc;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+        }
+        .education-card {
+            background: rgba(255,255,255,0.04);
+            color: #0f172a;
+            text-align: center;
+            padding: 56px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px) saturate(120%);
+            -webkit-backdrop-filter: blur(8px) saturate(120%);
+        }
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #60a5fa, #93c5fd, #3b82f6);
+        }
+        @media (max-width: 768px) {
+            .hero-section { padding: 100px 20px 80px; }
+            h1 { font-size: 3rem; }
+            .container { padding: 60px 20px; }
+            .section { padding: 60px 30px; margin-bottom: 40px; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .contact-info { flex-direction: column; align-items: center; gap: 20px; }
+            .profile-hero img, .profile-pic { width: 180px; height: 180px; }
+            .projects-grid, .hobbies-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .contact-item { padding: 12px 20px; font-size: 1rem; }
+            .profile-pic { width: 160px; height: 160px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Professional Navbar -->
+    <div style="padding:18px 24px; position:relative; z-index:40;">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="brand">Sai Manideep Maddala</div>
+                <div style="color:var(--muted); font-size:0.95rem;">ECE | Embedded Systems</div>
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a class="btn-resume" href="#">Resume</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Floating Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Hero Section (professional) -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div>
+                <h1> Sai Manideep Maddala</h1>
+                <p class="hero-subtitle">Electronics & Communication Engineer — Embedded Systems, IoT & Edge ML.</p>
+                <div class="hero-ctas">
+                    <a class="btn-primary" href="#projects">View Projects</a>
+                    <a class="btn-outline" href="#contact">Contact Me</a>
+                </div>
+                <div style="margin-top:22px; color:var(--muted); font-size:0.98rem; display:flex; gap:12px; flex-wrap:wrap;">
+                    <div class="contact-item">saimanideep686@gmail.com</div>
+                    <div class="contact-item">Visakhapatnam, India</div>
+                    <div class="contact-item">LinkedIn • GitHub</div>
+                </div>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:center;">
+                <div class="profile-hero">
+                    <img src="Preview.png" alt="Sai Manideep Maddala - ECE Student" id="profile-hero-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- About Section -->
+        <section class="section">
+            <h2>About Me</h2>
+            <img src="image.jpg" alt="Sai Manideep Profile" class="profile-pic" id="about-profile-img">
+            <div class="about-grid">
+                <div>
+                    <h3 style="color: #1e40af; font-size: 2rem; margin-bottom: 25px;">Vignan's Institute of Information Technology</h3>
+                    <p style="font-size: 1.2rem;"><strong>2nd Year B.Tech ECE</strong><br>Expected Graduation: 2027</p>
+                </div>
+                <div style="font-size: 1.15rem; line-height: 1.8;">
+                    <p>Second-year ECE undergraduate with hands-on expertise in <strong>embedded systems</strong>, <strong>IoT</strong>, microcontrollers (ESP8266, Arduino), and processor systems. Skilled in sensor integration for air quality monitoring, signal processing, and prototyping real-time IoT solutions on breadboards.</p>
+                    <p style="margin-top: 20px;">Passionate about building smart devices for environmental monitoring and automation, seeking internship opportunities in embedded development.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">🛠️</div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 20px;">Hardware</h3>
+                    <ul style="text-align: left; list-style: none; font-size: 1.15rem;">
+                        <li style="margin-bottom: 10px;">▹ ESP8266, Arduino Uno</li>
+                        <li style="margin-bottom: 10px;">▹ MQ-135 Gas Sensors</li>
+                        <li style="margin-bottom: 10px;">▹ DHT22 Humidity</li>
+                        <li>▹ Breadboard Prototyping</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 20px;">Programming</h3>
+                    <ul style="text-align: left; list-style: none; font-size: 1.15rem;">
+                        <li style="margin-bottom: 10px;">▹ C Programming</li>
+                        <li style="margin-bottom: 10px;">▹ Arduino IDE</li>
+                        <li style="margin-bottom: 10px;">▹ Python (Data Viz)</li>
+                        <li>▹ Embedded Firmware</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 20px;">Domains</h3>
+                    <ul style="text-align: left; list-style: none; font-size: 1.15rem;">
+                        <li style="margin-bottom: 10px;">▹ IoT Sensor Networks</li>
+                        <li style="margin-bottom: 10px;">▹ Air Quality Monitoring</li>
+                        <li style="margin-bottom: 10px;">▹ Signal Processing</li>
+                        <li>▹ AI Ventilation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section">
+            <h2>Key Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3 style="color: #1e40af; font-size: 1.6rem; margin-bottom: 18px;">🌡️ IoT Air Quality Monitor</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.7;">ESP8266 breadboard with MQ-135 & DHT22 sensors. Real-time AQI monitoring with ThingSpeak dashboard and GSM SMS alerts.</p>
+                </div>
+                <div class="project-card">
+                    <h3 style="color: #10b981; font-size: 1.6rem; margin-bottom: 18px;">🤖 AI Ventilation System</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.7;">Embedded ML for CO2/PM2.5-based adaptive fan control. Energy optimization through predictive ventilation patterns.</p>
+                </div>
+                <div class="project-card">
+                    <h3 style="color: #f59e0b; font-size: 1.6rem; margin-bottom: 18px;">⚡ Smart Energy Tracker</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.7;">WiFi energy meter with ACS712 sensor. Remote power monitoring and IoT appliance control dashboard.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section">
+            <div class="education-card">
+                <h2 style="margin-bottom: 25px; font-size: 2.5rem;">🎓 Education</h2>
+                <h3 style="font-size: 2rem; margin-bottom: 15px;">B.Tech Electronics & Communication Engineering</h3>
+                <p style="font-size: 1.3rem; line-height: 1.6;">
+                    <strong>Vignan's Institute of Information Technology</strong><br>
+                    Visakhapatnam, Andhra Pradesh<br>
+                    <strong>2nd Year | CGPA: [Add Current CGPA] | 2027 Graduate</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- Hobbies Section -->
+        <section class="section">
+            <h2>Hobbies & Interests</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card">
+                    <div style="font-size: 5rem; margin-bottom: 25px;">🎵</div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Music</h3>
+                    <p style="font-size: 1.2rem;">Exploring genres & playing instruments for creative balance</p>
+                </div>
+                <div class="hobby-card">
+                    <div style="font-size: 5rem; margin-bottom: 25px;">🏸</div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Badminton</h3>
+                    <p style="font-size: 1.2rem;">Active player focusing on agility, fitness & team sports</p>
+                </div>
+                <div class="hobby-card">
+                    <div style="font-size: 5rem; margin-bottom: 25px;">🎨</div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 15px;">Logo Design</h3>
+                    <p style="font-size: 1.2rem;">Science-inspired graphics & visual elements</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
